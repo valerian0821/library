@@ -23,7 +23,13 @@ function displayBook() {
             let newCell = newRow.insertCell(-1);
             newCell.innerText = myLibrary[i][prop];
         }
+        newCell = newRow.insertCell(-1);
+        newCell.appendChild(delBtns[i]);
     }
+}
+
+function clearTable() {
+    tbody.innerHTML = "";
 }
 
 function handleFormSubmit(event) {
@@ -32,16 +38,46 @@ function handleFormSubmit(event) {
     const pages = document.getElementById("pages").value;
     const author = document.getElementById("author").value;
     const read = document.getElementById("read").value;
-    tbody.innerHTML = "";
+    clearTable();
     addBookToLibrary(title, pages, author, read);
+    createDelBtns();
     displayBook();
     dialog.close();
     form.reset();  
 }
+
+function createDelBtns() {
+    delBtns.length = 0;
+    for (let i = 0; i < myLibrary.length; i++) {
+        delBtns.push(document.createElement("button"));
+        delBtns[i].textContent = "<==";
+        delBtns[i].classList.add("del-btn");
+        delBtns[i].addEventListener("click", function linkBookID() {
+            // removeDelBtns();
+            let bookID = myLibrary[i].id;
+            delBookFromLibrary(bookID);
+            clearTable();
+            createDelBtns();
+            displayBook();
+            console.log(myLibrary);
+        })
+    }
+}
+
+function delBookFromLibrary(bookID) {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (bookID == myLibrary[i].id) {
+            myLibrary.splice(i, 1);
+            return;
+        }
+    }
+}
+
 const table = document.querySelector("table");
 const tbody = document.querySelector("tbody")
 const dialog = document.querySelector("dialog");
 const btn = document.querySelector("#add-book");
+const delBtns = [];
 btn.addEventListener("click", (event) => {
     dialog.showModal();
 });

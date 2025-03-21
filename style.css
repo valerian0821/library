@@ -15,3 +15,16 @@ th, td {
     border: 1px solid black;
     padding: 10px 20px;
 }
+
+
+dialog {
+    z-index: 10;
+    margin-top: 10px;
+    background: green;
+    border: none;
+    border-radius: 1rem;
+}
+
+.del-btn {
+    font-weight: bold;
+}
