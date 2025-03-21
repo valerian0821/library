@@ -23,26 +23,26 @@
 
         </tbody>
     </table>
-    <button id="add-book">Add Book</button>
+    <button id="add-book">New Book</button>
     <dialog>
-        <form method="dialog">
+        <form method="post">
             <div>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
             </div>
             <div>
                 <label for="pages">Pages:</label>
-                <input type="text" id="pages" name="pages">
+                <input type="text" id="pages" name="pages" required>
             </div>            
             <div>
-                <label for="author" id="author">Author:</label>
-                <input type="text" id="author" name="author">
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author" required>
             </div>
             <div>
                 <input type="checkbox" id="read" name="read">
                 <label for="read">Read</label>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit" onclick="dialog.close()">Submit</button>
         </form>
     </dialog>
 </body>

@@ -17,9 +17,8 @@ function addBookToLibrary(title, pages, author, read) {
 }
 
 function displayBook() {
-    const table = document.getElementById("myTable");
     for (let i = 0; i < myLibrary.length; i++) {
-        let newRow = table.insertRow(-1);
+        let newRow = tbody.insertRow(-1);
         for (let prop in myLibrary[i]) {
             let newCell = newRow.insertCell(-1);
             newCell.innerText = myLibrary[i][prop];
@@ -27,12 +26,24 @@ function displayBook() {
     }
 }
 
-
-addBookToLibrary("The Hobbit", "295", "Tolkien", "Yes");
-addBookToLibrary("The Hobbit", 295, "Tolkien", "No");
-displayBook();
+function handleFormSubmit(event) {
+    event.preventDefault();
+    const title = document.getElementById("title").value;
+    const pages = document.getElementById("pages").value;
+    const author = document.getElementById("author").value;
+    const read = document.getElementById("read").value;
+    tbody.innerHTML = "";
+    addBookToLibrary(title, pages, author, read);
+    displayBook();
+    dialog.close();
+    form.reset();  
+}
+const table = document.querySelector("table");
+const tbody = document.querySelector("tbody")
 const dialog = document.querySelector("dialog");
 const btn = document.querySelector("#add-book");
 btn.addEventListener("click", (event) => {
     dialog.showModal();
 });
+const form = document.querySelector("form");
+form.addEventListener("submit", handleFormSubmit);
