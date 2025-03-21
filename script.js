@@ -32,16 +32,20 @@ function clearTable() {
     tbody.innerHTML = "";
 }
 
+function refreshTable() {
+    clearTable();
+    createDelBtns();
+    displayBook();
+}
+
 function handleFormSubmit(event) {
     event.preventDefault();
     const title = document.getElementById("title").value;
     const pages = document.getElementById("pages").value;
     const author = document.getElementById("author").value;
     const read = document.getElementById("read").value;
-    clearTable();
     addBookToLibrary(title, pages, author, read);
-    createDelBtns();
-    displayBook();
+    refreshTable();
     dialog.close();
     form.reset();  
 }
@@ -56,10 +60,7 @@ function createDelBtns() {
             // removeDelBtns();
             let bookID = myLibrary[i].id;
             delBookFromLibrary(bookID);
-            clearTable();
-            createDelBtns();
-            displayBook();
-            console.log(myLibrary);
+            refreshTable();
         })
     }
 }
