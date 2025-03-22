@@ -9,6 +9,14 @@ function Book(id, title, pages, author, read) {
     this.read = read;
 }
 
+Book.prototype.toggleRead = function() {
+    if (this.read === "Yes") {
+        this.read = "No";
+    } else {
+        this.read = "Yes";
+    }
+}
+
 function addBookToLibrary(title, pages, author, read) {
   // take params, create a book then store it in the array
     let newID = crypto.randomUUID();
@@ -20,11 +28,15 @@ function displayBook() {
     for (let i = 0; i < myLibrary.length; i++) {
         let newRow = tbody.insertRow(-1);
         for (let prop in myLibrary[i]) {
-            let newCell = newRow.insertCell(-1);
-            newCell.innerText = myLibrary[i][prop];
+            if (myLibrary[i].hasOwnProperty(prop)) {
+                let newCell = newRow.insertCell(-1);
+                newCell.innerText = myLibrary[i][prop];
+            } 
         }
-        newCell = newRow.insertCell(-1);
-        newCell.appendChild(delBtns[i]);
+        let toggleCell = newRow.insertCell(-1);
+        toggleCell.appendChild(toggleBtns[i]);
+        let delCell = newRow.insertCell(-1);
+        delCell.appendChild(delBtns[i]);
     }
 }
 
@@ -34,6 +46,7 @@ function clearTable() {
 
 function refreshTable() {
     clearTable();
+    createToggleBtns();
     createDelBtns();
     displayBook();
 }
@@ -43,7 +56,7 @@ function handleFormSubmit(event) {
     const title = document.getElementById("title").value;
     const pages = document.getElementById("pages").value;
     const author = document.getElementById("author").value;
-    const read = document.getElementById("read").value;
+    const read = document.getElementById("read").checked ? "Yes" : "No";   
     addBookToLibrary(title, pages, author, read);
     refreshTable();
     dialog.close();
@@ -57,7 +70,6 @@ function createDelBtns() {
         delBtns[i].textContent = "<==";
         delBtns[i].classList.add("del-btn");
         delBtns[i].addEventListener("click", function linkBookID() {
-            // removeDelBtns();
             let bookID = myLibrary[i].id;
             delBookFromLibrary(bookID);
             refreshTable();
@@ -74,11 +86,25 @@ function delBookFromLibrary(bookID) {
     }
 }
 
+function createToggleBtns() {
+    toggleBtns.length = 0;
+    for (let i = 0; i < myLibrary.length; i++) {
+        toggleBtns.push(document.createElement("button"));
+        toggleBtns[i].textContent = "Toggle"
+        toggleBtns[i].classList.add("toggle-btn");
+        toggleBtns[i].addEventListener("click", function toggle() {
+            myLibrary[i].toggleRead();
+            refreshTable();
+        })
+    }
+}
+
 const table = document.querySelector("table");
 const tbody = document.querySelector("tbody")
 const dialog = document.querySelector("dialog");
 const btn = document.querySelector("#add-book");
 const delBtns = [];
+const toggleBtns = [];
 btn.addEventListener("click", (event) => {
     dialog.showModal();
 });
