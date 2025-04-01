@@ -1,19 +1,20 @@
 const myLibrary = [];
 
-function Book(id, title, pages, author, read) {
-  // the constructor...
-    this.id = id;
-    this.title = title;
-    this.pages = pages;
-    this.author = author;
-    this.read = read;
-}
+class Book {
+    constructor(id, title, pages, author, read) {
+        this.id = id;
+        this.title = title;
+        this.pages = pages;
+        this.author = author;
+        this.read = read;
+    }
 
-Book.prototype.toggleRead = function() {
-    if (this.read === "Yes") {
-        this.read = "No";
-    } else {
-        this.read = "Yes";
+    toggleRead() {
+        if (this.read === "Yes") {
+            this.read = "No";
+        } else {
+            this.read = "Yes";
+        }
     }
 }
 
