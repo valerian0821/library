@@ -57,3 +57,11 @@ dialog {
 .toggle-btn {
     font-weight: bold;
 }
+
+input:valid {
+    border: 2px solid green;
+}
+
+input:user-invalid {
+    border: 2px solid red;
+}

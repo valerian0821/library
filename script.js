@@ -100,6 +100,8 @@ function createToggleBtns() {
     }
 }
 
+
+
 const table = document.querySelector("table");
 const tbody = document.querySelector("tbody")
 const dialog = document.querySelector("dialog");
@@ -111,3 +113,14 @@ btn.addEventListener("click", (event) => {
 });
 const form = document.querySelector("form");
 form.addEventListener("submit", handleFormSubmit);
+
+
+const pages = document.getElementById("pages");
+
+pages.addEventListener("input", (event) => {
+    if (!Number.isInteger(Number(pages.value))) {
+        pages.setCustomValidity("Please enter a whole number for the number of pages.");
+    } else {
+        pages.setCustomValidity("");
+    }
+});
